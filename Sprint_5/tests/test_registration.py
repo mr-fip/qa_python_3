@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+<<<<<<< HEAD
 
 EMAIL = 'ignatfaitulin18@yandex.ru'
 PASSWORD = '12345678'
@@ -21,6 +22,27 @@ def test_registration_success(driver):
     driver.get(URL)
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, REGISTER_BUTTON))).click()
 
+=======
+
+EMAIL = 'ignatfaitulin18@yandex.ru'
+PASSWORD = '12345678'
+NAME = 'Ignat'
+URL = 'https://stellarburgers.nomoreparties.site/'
+
+REGISTER_BUTTON = "/html/body/div/div/main/section[2]/div/button"
+REGISTER_LINK = "//a[contains(text(),'Зарегистрироваться')]"
+NAME_INPUT = "/html/body/div/div/main/div/form/fieldset[1]/div/div/input" # У элемента нет уникального имени или ID
+EMAIL_INPUT = "/html/body/div/div/main/div/form/fieldset[2]/div/div/input" # У элемента нет уникального имени или ID
+PASSWORD_INPUT = ".//input[@name='Пароль']"
+SUBMIT_BUTTON = "//button[text()='Зарегистрироваться']"
+SUCCESS_BUTTON = "//button[@class='button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_medium__3zxIa']"
+ERROR_MESSAGE = "//p[contains(@class, 'input__error')]"
+
+def test_registration_success(driver):
+    driver.get(URL)
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, REGISTER_BUTTON))).click()
+
+>>>>>>> ff464d1 (Versin_5)
     WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, REGISTER_LINK))).click()
     
     # Заполнение формы
