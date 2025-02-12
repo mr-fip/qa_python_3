@@ -28,20 +28,14 @@ def test_login1(driver):
     driver.get(URL)
     driver.find_element(By.XPATH, LOGIN_BUTTON).click()
     login(driver, EMAIL, PASSWORD)
-<<<<<<< HEAD
-=======
     assert WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, ORDER_BUTTON)))
->>>>>>> ff464d1 (Versin_5)
 
 # Вход через кнопку "личный кабинет"
 def test_login2(driver):
     driver.get(URL)
     driver.find_element(By.XPATH, PERSONAL_CABINET_LINK).click()
     login(driver, EMAIL, PASSWORD)
-<<<<<<< HEAD
-=======
     assert WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, ORDER_BUTTON)))
->>>>>>> ff464d1 (Versin_5)
 
 # Вход через кнопку в форме регистрации
 def test_login3(driver):
@@ -50,10 +44,7 @@ def test_login3(driver):
     driver.find_element(By.XPATH, REGISTER_LINK).click()
     driver.find_element(By.XPATH, CON_BUTTON).click()
     login(driver, EMAIL, PASSWORD)
-<<<<<<< HEAD
-=======
     assert WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, ORDER_BUTTON)))
->>>>>>> ff464d1 (Versin_5)
 
 #Вход через кнопку в форме восстановления пароля
 def test_login4(driver):
@@ -62,7 +53,4 @@ def test_login4(driver):
     driver.find_element(By.XPATH, RECOVER_PASSWORD_LINK).click()
     driver.find_element(By.XPATH, CON_BUTTON).click()
     login(driver, EMAIL, PASSWORD)
-<<<<<<< HEAD
-=======
     assert WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, ORDER_BUTTON)))
->>>>>>> ff464d1 (Versin_5)
