@@ -1,8 +1,9 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.remote.webelement import WebElement
 import allure
 
-class BasePage:
+class BasePage():
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 30)
@@ -45,9 +46,9 @@ class BasePage:
                      if w != self.driver.current_window_handle][0]
         self.driver.switch_to.window(new_window)
 
-    @allure.step("Проверить наличие текста '{text}' в URL")
-    def is_url_contains(self, text: str) -> bool:
-        return text in self.driver.current_url
+    @allure.step("Ожидание URL, содержащего '{text}'")
+    def wait_url_contains(self, text: str):
+        return self.wait.until(EC.url_contains(text))
     
     @allure.step("Закрыть окно и вернуться к исходному")
     def close_and_switch_to_window(self, original_window: str):
@@ -57,3 +58,42 @@ class BasePage:
     @allure.step("Проверить соответствие текущего URL паттерну '{pattern}'")
     def is_current_url_matches(self, pattern: str) -> bool:
         return pattern in self.driver.current_url
+    
+    @allure.step("Скролл к элементу")
+    def scroll_to_element(self, element: WebElement):
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+
+    @allure.step("Ожидание видимости элемента по локатору")
+    def wait_visibility_of_element(self, locator):
+        return self.wait.until(EC.visibility_of_element_located(locator))
+    
+    @allure.step("Ожидание количества окон: {num_windows}")
+    def wait_for_number_of_windows(self, num_windows: int):
+        return self.wait.until(EC.number_of_windows_to_be(num_windows))
+    
+    @allure.step("Получить текущий URL")
+    def get_current_url(self) -> str:
+        return self.driver.current_url
+    
+    @allure.step("Открыть страницу заказа")
+    def open_order_page(self, entry_point: str):
+        self.click_order_button(entry_point)
+        self.wait.until(EC.url_contains("/order"))
+
+    @allure.step("Проверить наличие текста '{text}' в URL")
+    def is_url_contains(self, text: str) -> bool:
+        return text in self.driver.current_url
+    
+    def click_element_with_scroll(self, locator):
+        element = self.wait_element_to_be_clickable(locator)
+        self.scroll_to_element(element)
+        self.click(element)
+
+    @allure.step("Ожидание кликабельности элемента {locator}")
+    def wait_element_to_be_clickable(self, locator) -> WebElement:
+        return self.wait.until(EC.element_to_be_clickable(locator))
+    
+    @allure.step("Клик после ожидания кликабельности элемента {locator}")
+    def click_after_wait(self, locator):
+        element = self.wait_element_to_be_clickable(locator)
+        self.click(element)

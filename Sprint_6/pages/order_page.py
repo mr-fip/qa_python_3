@@ -1,7 +1,6 @@
 from .base_page import BasePage
 from locators.order_page_locators import OrderPageLocators
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 import allure
 
 class OrderPage(BasePage):
@@ -25,28 +24,10 @@ class OrderPage(BasePage):
 
     @allure.step("Выбор периода аренды: {period}")
     def _select_rental_period(self, period: str):
-        try:
-            rental_period = self.wait.until(
-                EC.element_to_be_clickable(OrderPageLocators.RENTAL_PERIOD)
-            )
-            self.driver.execute_script("arguments[0].scrollIntoView(true);", rental_period)
-            rental_period.click()
-            
-            self.wait.until(
-                EC.visibility_of_element_located(
-                    (By.XPATH, "//div[@class='Dropdown-menu']")
-                )
-            )
-            period_locator = (OrderPageLocators.RENTAL_PERIOD_OPTION[0], 
-                              OrderPageLocators.RENTAL_PERIOD_OPTION[1].format(period))
-            option = self.wait.until(
-                EC.element_to_be_clickable(period_locator)
-            )
-            self.driver.execute_script("arguments[0].click();", option)
-
-        except Exception as e:
-            self.driver.save_screenshot("period_selection_error.png")
-            raise
+        self.click_element_with_scroll(OrderPageLocators.RENTAL_PERIOD)
+        self.wait_visibility_of_element(OrderPageLocators.DROPDOWN_MENU)
+        period_locator = (OrderPageLocators.RENTAL_PERIOD_OPTION[0], OrderPageLocators.RENTAL_PERIOD_OPTION[1].format(period))
+        self.click_after_wait(period_locator)
     
     @allure.step("Клик по телу страницы")
     def click_body(self):

@@ -17,8 +17,8 @@ class TestOrderFlow:
             'comment': 'Тестовый заказ'
         })
     ])
-    @allure.title('Оформление заказа через {entry_point}')
-    def test_order_flow(self, home_page, order_page, entry_point, personal_info, rent_info):
+    
+    def test_order_flow(self, order_page, entry_point, personal_info, rent_info, home_page):
         home_page.open_order_page(entry_point)
         order_page.fill_personal_info(**personal_info)
         order_page.fill_rent_info(**rent_info)

@@ -1,7 +1,6 @@
 from .base_page import BasePage
 from locators.home_page_locators import HomePageLocators
 from locators.base_page_locators import BasePageLocators
-from selenium.webdriver.support import expected_conditions as EC
 import allure
 
 class HomePage(BasePage):
@@ -21,7 +20,7 @@ class HomePage(BasePage):
 
     @allure.step("Нажать кнопку заказа ({position})")
     def click_order_button(self, position: str = 'header'):
-        locator = HomePageLocators.ORDER_BUTTON_HEADER if position == 'header' else HomePageLocators.ORDER_BUTTON_FOOTER
+        locator = (HomePageLocators.ORDER_BUTTON_HEADER if position == 'header' else HomePageLocators.ORDER_BUTTON_FOOTER)
         self.click(locator)
 
     @allure.step("Нажать логотип Самоката")
@@ -31,8 +30,3 @@ class HomePage(BasePage):
     @allure.step("Нажать логотип Яндекса")
     def click_yandex_logo(self):
         self.click(BasePageLocators.YANDEX_LOGO)
-
-    @allure.step("Открыть страницу заказа")
-    def open_order_page(self, entry_point: str):
-        self.click_order_button(entry_point)
-        self.wait.until(EC.url_contains("/order"))

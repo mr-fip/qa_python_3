@@ -2,6 +2,7 @@ import pytest
 from selenium import webdriver
 from pages.home_page import HomePage
 from pages.order_page import OrderPage
+from pages.base_page import BasePage
 
 @pytest.fixture
 def driver():
@@ -19,3 +20,7 @@ def home_page(driver):
 @pytest.fixture
 def order_page(driver):
     return OrderPage(driver)
+
+@pytest.fixture
+def base_page(driver):
+    return BasePage(driver)

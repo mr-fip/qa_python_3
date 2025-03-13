@@ -15,3 +15,4 @@ class OrderPageLocators:
     ORDER_BUTTON = (By.XPATH, '//button[@class="Button_Button__ra12g Button_Middle__1CSJM"]')
     CONFIRM_BUTTON = (By.XPATH, '//button[contains(., "Да")]')
     SUCCESS_MESSAGE = (By.XPATH, '//div[contains(., "Заказ оформлен")]')
+    DROPDOWN_MENU = (By.XPATH, "//div[@class='Dropdown-menu']")
