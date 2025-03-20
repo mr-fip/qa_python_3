@@ -10,8 +10,8 @@ class HomePage(BasePage):
 
     @allure.step("Нажать на вопрос №{index}")
     def click_question(self, index: int):
-        questions = self.find_all(HomePageLocators.QUESTION)
-        self.click(questions[index])
+        question_locator = (HomePageLocators.QUESTION[0], f"{HomePageLocators.QUESTION[1]}[{index + 1}]")
+        self.click_with_actions(question_locator)
 
     @allure.step("Получить текст ответа")
     def get_answer_text(self, index: int) -> str:

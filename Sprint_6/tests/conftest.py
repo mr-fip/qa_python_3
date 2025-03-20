@@ -2,12 +2,12 @@ import pytest
 from selenium import webdriver
 from pages.home_page import HomePage
 from pages.order_page import OrderPage
-from pages.base_page import BasePage
+from data import BASE_URL
 
 @pytest.fixture
 def driver():
     driver = webdriver.Firefox()
-    driver.get("https://qa-scooter.praktikum-services.ru/")
+    driver.get(BASE_URL)
     yield driver
     driver.quit()
 
