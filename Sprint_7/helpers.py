@@ -1,22 +1,20 @@
+import pytest
 import requests
 import random
 import string
+from data.urls import COURIER_URL
 
-def register_new_courier_and_return_login_password():
-    def generate_random_string(length):
-        letters = string.ascii_lowercase
-        return ''.join(random.choice(letters) for _ in range(length))
+def generate_random_string(length: int) -> str:
+    return "".join(random.choice(string.ascii_lowercase) for _ in range(length))
 
-    login_pass = []
+def register_new_courier() -> tuple[str, str, str]:
     login = generate_random_string(10)
     password = generate_random_string(10)
     first_name = generate_random_string(10)
-
-    payload = {"login": login, "password": password, "firstName": first_name}
-
-    response = requests.post('https://qa-scooter.praktikum-services.ru/api/v1/courier', data=payload)
-
+    
+    response = requests.post(COURIER_URL, data={"login": login, "password": password, "firstName": first_name})
+    
     if response.status_code == 201:
-        login_pass.extend([login, password, first_name])
-
-    return login_pass
+        return (login, password, first_name)
+    else:
+        pytest.fail("Не удалось создать курьера")
